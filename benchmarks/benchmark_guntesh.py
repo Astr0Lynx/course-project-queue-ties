@@ -83,6 +83,13 @@ class BenchmarkRunner:
             'largest_component': max([len(c) for c in components]) if components else 0,
         }
         
+        # Print detailed performance for this test case
+        print(f"    ✓ Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
+        print(f"    ✓ Components: {result['num_components']} | Largest: {result['largest_component']} stocks")
+        if components:
+            avg_size = sum(result['component_sizes']) / len(result['component_sizes'])
+            print(f"    ✓ Avg component size: {avg_size:.1f} | Total edges processed: {graph.num_edges}")
+        
         return result
     
     def benchmark_bfs(self, graph, stock_attributes: Dict,
@@ -104,6 +111,7 @@ class BenchmarkRunner:
         
         nodes = graph.get_nodes()
         if len(nodes) < 2:
+            print(f"    ⚠ Skipped (insufficient nodes)")
             return None
         
         # Test standard BFS
@@ -139,6 +147,14 @@ class BenchmarkRunner:
             'max_path_length': max(path_lengths) if path_lengths else 0,
             'connectivity': connectivity,
         }
+        
+        # Print detailed performance for this test case
+        print(f"    ✓ Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
+        print(f"    ✓ Paths found: {len(path_lengths)}/{num_samples} samples")
+        if path_lengths:
+            print(f"    ✓ Avg path length: {avg_path_length:.2f} | Max: {result['max_path_length']} | Min: {min(path_lengths)}")
+            success_rate = (len(path_lengths) / num_samples) * 100
+            print(f"    ✓ Reachability: {success_rate:.1f}% of tested pairs connected")
         
         return result
     
@@ -181,15 +197,11 @@ class BenchmarkRunner:
                 # Benchmark Union-Find
                 uf_result = self.benchmark_union_find(graph, stock_attrs, scenario, size)
                 self.results.append(uf_result)
-                print(f"    Union-Find: {uf_result['runtime_seconds']:.4f}s, "
-                      f"{uf_result['num_components']} components")
                 
                 # Benchmark BFS
                 bfs_result = self.benchmark_bfs(graph, stock_attrs, scenario, size)
                 if bfs_result:
                     self.results.append(bfs_result)
-                    print(f"    BFS: {bfs_result['runtime_seconds']:.4f}s, "
-                          f"avg path: {bfs_result['avg_path_length']:.2f}")
         
         print("\n" + "="*60)
         print("BENCHMARK COMPLETE")
