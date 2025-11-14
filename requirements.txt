@@ -1,0 +1,15 @@
+# Stock Market Tangle Project - Requirements
+# Author: Guntesh Singh
+
+# Core dependencies for data generation
+numpy>=1.24.0
+pandas>=2.0.0
+
+# For benchmarking and performance analysis
+psutil>=5.9.0
+
+# For testing
+pytest>=7.4.0
+
+# For plotting/visualization (optional, for results)
+matplotlib>=3.7.0
