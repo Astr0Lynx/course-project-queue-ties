@@ -10,146 +10,156 @@ import numpy as np
 import os
 
 
-def load_benchmark_results(filepath='results/guntesh_benchmarks.json'):
-    """Load benchmark results from JSON file."""
-    with open(filepath, 'r') as f:
+def load_benchmark_results(filepath=None):
+    """Load benchmark results from JSON file.
+
+    If `filepath` is None, look for any file in `results/` that ends with
+    `_benchmarks.json` or `guntesh_benchmarks.json` and load the first match.
+    """
+    if filepath:
+        with open(filepath, 'r') as f:
+            return json.load(f)
+
+    # auto-discover
+    candidates = []
+    for fn in os.listdir('results'):
+        if fn.endswith('_benchmarks.json') or fn == 'guntesh_benchmarks.json':
+            candidates.append(os.path.join('results', fn))
+
+    if not candidates:
+        raise FileNotFoundError('No benchmark json file found in results/. Run benchmarks first.')
+
+    with open(candidates[0], 'r') as f:
         return json.load(f)
 
 
-def plot_runtime_comparison(results, output_dir='results'):
+def plot_runtime_by_algorithm(results, output_dir='results'):
+    """Plot runtime vs graph size for each detected algorithm and scenario.
+
+    Produces one PNG per algorithm and a combined comparison plot.
     """
-    Plot runtime comparison between Union-Find and BFS.
-    """
-    # Separate by algorithm
-    uf_results = [r for r in results if r['algorithm'] == 'Union-Find']
-    bfs_results = [r for r in results if r['algorithm'] == 'BFS']
-    
-    # Group by size
-    sizes = sorted(set(r['num_stocks'] for r in uf_results))
-    scenarios = ['stable', 'normal', 'volatile', 'crash']
-    
-    # Create figure with subplots
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    # Plot Union-Find runtime
-    for scenario in scenarios:
-        runtimes = []
-        for size in sizes:
-            matching = [r for r in uf_results 
-                       if r['num_stocks'] == size and r['scenario'] == scenario]
-            if matching:
-                runtimes.append(matching[0]['runtime_seconds'])
-            else:
-                runtimes.append(0)
-        ax1.plot(sizes, runtimes, marker='o', label=scenario.capitalize(), linewidth=2)
-    
-    ax1.set_xlabel('Number of Stocks', fontsize=12)
-    ax1.set_ylabel('Runtime (seconds)', fontsize=12)
-    ax1.set_title('Union-Find Runtime Performance', fontsize=14, fontweight='bold')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
-    
-    # Plot BFS runtime
-    for scenario in scenarios:
-        runtimes = []
-        for size in sizes:
-            matching = [r for r in bfs_results 
-                       if r['num_stocks'] == size and r['scenario'] == scenario]
-            if matching:
-                runtimes.append(matching[0]['runtime_seconds'])
-            else:
-                runtimes.append(0)
-        ax2.plot(sizes, runtimes, marker='s', label=scenario.capitalize(), linewidth=2)
-    
-    ax2.set_xlabel('Number of Stocks', fontsize=12)
-    ax2.set_ylabel('Runtime (seconds)', fontsize=12)
-    ax2.set_title('BFS Runtime Performance', fontsize=14, fontweight='bold')
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
-    
+    algorithms = sorted(set(r['algorithm'] for r in results))
+    scenarios = sorted(set(r.get('scenario', 'default') for r in results))
+
+    # Per-algorithm plots
+    for algo in algorithms:
+        algo_results = [r for r in results if r['algorithm'] == algo]
+        sizes = sorted(set(r['num_stocks'] for r in algo_results))
+
+        fig, ax = plt.subplots(figsize=(8, 5))
+        for scenario in scenarios:
+            runtimes = []
+            for size in sizes:
+                match = [r for r in algo_results if r['num_stocks'] == size and r.get('scenario') == scenario]
+                runtimes.append(match[0]['runtime_seconds'] if match else 0)
+            ax.plot(sizes, runtimes, marker='o', label=scenario.capitalize())
+
+        ax.set_xlabel('Number of Stocks')
+        ax.set_ylabel('Runtime (s)')
+        ax.set_title(f'{algo} Runtime by Scenario')
+        ax.grid(True, alpha=0.3)
+        ax.legend()
+        plt.tight_layout()
+        out = f"{output_dir}/{algo.replace(' ', '_').lower()}_runtime.png"
+        plt.savefig(out, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"✓ Saved: {out}")
+
+    # Combined comparison: runtime per algorithm for each scenario
+    sizes = sorted(set(r['num_stocks'] for r in results))
+    fig, axes = plt.subplots(1, len(scenarios), figsize=(5 * len(scenarios), 4), squeeze=False)
+    for j, scenario in enumerate(scenarios):
+        ax = axes[0][j]
+        for algo in algorithms:
+            vals = []
+            for size in sizes:
+                match = [r for r in results if r['algorithm'] == algo and r['num_stocks'] == size and r.get('scenario') == scenario]
+                vals.append(match[0]['runtime_seconds'] if match else 0)
+            ax.plot(sizes, vals, marker='o', label=algo)
+        ax.set_title(scenario.capitalize())
+        ax.set_xlabel('Number of Stocks')
+        ax.set_ylabel('Runtime (s)')
+        ax.grid(True, alpha=0.3)
+        ax.legend()
+
     plt.tight_layout()
-    plt.savefig(f'{output_dir}/runtime_comparison.png', dpi=300, bbox_inches='tight')
-    print(f"✓ Saved: {output_dir}/runtime_comparison.png")
+    out = f"{output_dir}/runtime_comparison_all_algorithms.png"
+    plt.savefig(out, dpi=300, bbox_inches='tight')
     plt.close()
+    print(f"✓ Saved: {out}")
 
 
 def plot_components_analysis(results, output_dir='results'):
+    """Plot number of connected components when available in results.
+
+    This function looks for any algorithm outputs that include `num_components`.
     """
-    Plot number of connected components across scenarios.
-    """
-    uf_results = [r for r in results if r['algorithm'] == 'Union-Find']
-    
-    sizes = sorted(set(r['num_stocks'] for r in uf_results))
-    scenarios = ['stable', 'normal', 'volatile', 'crash']
-    
+    entries = [r for r in results if 'num_components' in r]
+    if not entries:
+        print('⚠ No num_components data found; skipping components analysis')
+        return
+
+    algorithms = sorted(set(r['algorithm'] for r in entries))
+    sizes = sorted(set(r['num_stocks'] for r in entries))
+    scenarios = sorted(set(r.get('scenario', 'default') for r in entries))
+
     fig, ax = plt.subplots(figsize=(10, 6))
-    
     x = np.arange(len(sizes))
-    width = 0.2
-    
+    width = 0.15
+
     for i, scenario in enumerate(scenarios):
-        components = []
+        comps = []
         for size in sizes:
-            matching = [r for r in uf_results 
-                       if r['num_stocks'] == size and r['scenario'] == scenario]
-            if matching:
-                components.append(matching[0]['num_components'])
-            else:
-                components.append(0)
-        
-        ax.bar(x + i * width, components, width, 
-               label=scenario.capitalize(), alpha=0.8)
-    
-    ax.set_xlabel('Graph Size (Number of Stocks)', fontsize=12)
-    ax.set_ylabel('Number of Connected Components', fontsize=12)
-    ax.set_title('Market Segmentation: Connected Components by Scenario', 
-                 fontsize=14, fontweight='bold')
+            matches = [r for r in entries if r['num_stocks'] == size and r.get('scenario') == scenario]
+            # If multiple algorithms provide components, sum or pick first
+            comps.append(sum([m['num_components'] for m in matches]) if matches else 0)
+        ax.bar(x + i * width, comps, width, label=scenario.capitalize())
+
+    ax.set_xlabel('Graph Size')
+    ax.set_ylabel('Number of Components')
+    ax.set_title('Connected Components by Scenario')
     ax.set_xticks(x + width * 1.5)
     ax.set_xticklabels(sizes)
     ax.legend()
-    ax.grid(True, axis='y', alpha=0.3)
-    
+    ax.grid(True, alpha=0.3)
+
+    out = f"{output_dir}/components_analysis.png"
     plt.tight_layout()
-    plt.savefig(f'{output_dir}/components_analysis.png', dpi=300, bbox_inches='tight')
-    print(f"✓ Saved: {output_dir}/components_analysis.png")
+    plt.savefig(out, dpi=300, bbox_inches='tight')
     plt.close()
+    print(f"✓ Saved: {out}")
 
 
 def plot_path_length_analysis(results, output_dir='results'):
-    """
-    Plot average path lengths from BFS analysis.
-    """
-    bfs_results = [r for r in results if r['algorithm'] == 'BFS']
-    
-    sizes = sorted(set(r['num_stocks'] for r in bfs_results))
-    scenarios = ['stable', 'normal', 'volatile', 'crash']
-    
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    for scenario in scenarios:
-        path_lengths = []
-        for size in sizes:
-            matching = [r for r in bfs_results 
-                       if r['num_stocks'] == size and r['scenario'] == scenario]
-            if matching:
-                path_lengths.append(matching[0]['avg_path_length'])
-            else:
-                path_lengths.append(0)
-        
-        ax.plot(sizes, path_lengths, marker='o', 
-                label=scenario.capitalize(), linewidth=2, markersize=8)
-    
-    ax.set_xlabel('Number of Stocks', fontsize=12)
-    ax.set_ylabel('Average Shortest Path Length', fontsize=12)
-    ax.set_title('BFS Analysis: Average Path Length by Scenario', 
-                 fontsize=14, fontweight='bold')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/path_length_analysis.png', dpi=300, bbox_inches='tight')
-    print(f"✓ Saved: {output_dir}/path_length_analysis.png")
-    plt.close()
+    """Plot average path length when present in result entries (e.g., BFS/DFS)."""
+    entries = [r for r in results if 'avg_path_length' in r]
+    if not entries:
+        print('⚠ No avg_path_length data found; skipping path length analysis')
+        return
+
+    algorithms = sorted(set(r['algorithm'] for r in entries))
+    sizes = sorted(set(r['num_stocks'] for r in entries))
+    scenarios = sorted(set(r.get('scenario', 'default') for r in entries))
+
+    for algo in algorithms:
+        algo_entries = [r for r in entries if r['algorithm'] == algo]
+        fig, ax = plt.subplots(figsize=(8, 5))
+        for scenario in scenarios:
+            vals = []
+            for size in sizes:
+                match = [r for r in algo_entries if r['num_stocks'] == size and r.get('scenario') == scenario]
+                vals.append(match[0]['avg_path_length'] if match else 0)
+            ax.plot(sizes, vals, marker='o', label=scenario)
+        ax.set_title(f'{algo} - Avg Path Length by Scenario')
+        ax.set_xlabel('Number of Stocks')
+        ax.set_ylabel('Avg Path Length')
+        ax.grid(True, alpha=0.3)
+        ax.legend()
+        out = f"{output_dir}/{algo.replace(' ', '_').lower()}_path_length.png"
+        plt.tight_layout()
+        plt.savefig(out, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"✓ Saved: {out}")
 
 
 def plot_graph_density(results, output_dir='results'):
@@ -388,7 +398,8 @@ def main():
     
     # Generate all plots
     print("\nGenerating charts...")
-    plot_runtime_comparison(results, output_dir)
+    # runtime plots for detected algorithms
+    plot_runtime_by_algorithm(results, output_dir)
     plot_components_analysis(results, output_dir)
     plot_path_length_analysis(results, output_dir)
     plot_graph_density(results, output_dir)
