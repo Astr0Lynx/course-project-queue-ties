@@ -1,0 +1,948 @@
+{
+  "adjacency_list": {
+    "STOCK_000": {
+      "STOCK_010": 0.5472389864782206
+    },
+    "STOCK_001": {},
+    "STOCK_002": {},
+    "STOCK_003": {},
+    "STOCK_004": {
+      "STOCK_037": 0.5118249356391513,
+      "STOCK_042": 0.5598638655568011
+    },
+    "STOCK_005": {
+      "STOCK_020": 0.514130260679357,
+      "STOCK_067": 0.5815978366452567,
+      "STOCK_068": 0.5412327431896469,
+      "STOCK_084": 0.608785398582303,
+      "STOCK_087": 0.5105009746254787
+    },
+    "STOCK_006": {
+      "STOCK_042": 0.5796554765504224,
+      "STOCK_068": 0.5998125059259235,
+      "STOCK_098": 0.5462848379623084
+    },
+    "STOCK_007": {},
+    "STOCK_008": {},
+    "STOCK_009": {},
+    "STOCK_010": {
+      "STOCK_000": 0.5472389864782206,
+      "STOCK_013": 0.545835072320665,
+      "STOCK_060": 0.5323120204788955,
+      "STOCK_063": 0.5699819823050455,
+      "STOCK_079": 0.6516730256036644,
+      "STOCK_083": 0.5768111498722561
+    },
+    "STOCK_011": {},
+    "STOCK_012": {},
+    "STOCK_013": {
+      "STOCK_010": 0.545835072320665,
+      "STOCK_083": 0.5577445032151119
+    },
+    "STOCK_014": {
+      "STOCK_031": 0.5101578847967485,
+      "STOCK_044": 0.514016956585181
+    },
+    "STOCK_015": {
+      "STOCK_046": 0.6083368452872308,
+      "STOCK_053": 0.5205088805426336
+    },
+    "STOCK_016": {
+      "STOCK_032": 0.5535078959153088,
+      "STOCK_083": 0.5863867864883912
+    },
+    "STOCK_017": {},
+    "STOCK_018": {},
+    "STOCK_019": {
+      "STOCK_099": 0.5211445580390535
+    },
+    "STOCK_020": {
+      "STOCK_005": 0.514130260679357
+    },
+    "STOCK_021": {
+      "STOCK_031": 0.5105141262503176
+    },
+    "STOCK_022": {},
+    "STOCK_023": {},
+    "STOCK_024": {},
+    "STOCK_025": {},
+    "STOCK_026": {},
+    "STOCK_027": {
+      "STOCK_049": 0.606261531362242
+    },
+    "STOCK_028": {},
+    "STOCK_029": {
+      "STOCK_068": 0.5687966006328857
+    },
+    "STOCK_030": {
+      "STOCK_068": 0.5042331277374018
+    },
+    "STOCK_031": {
+      "STOCK_014": 0.5101578847967485,
+      "STOCK_021": 0.5105141262503176,
+      "STOCK_077": 0.6586996130775161
+    },
+    "STOCK_032": {
+      "STOCK_016": 0.5535078959153088,
+      "STOCK_063": 0.500519051132919,
+      "STOCK_083": 0.5903850597746902
+    },
+    "STOCK_033": {},
+    "STOCK_034": {},
+    "STOCK_035": {},
+    "STOCK_036": {},
+    "STOCK_037": {
+      "STOCK_004": 0.5118249356391513,
+      "STOCK_042": 0.6443919848304218,
+      "STOCK_090": 0.5041697152597109
+    },
+    "STOCK_038": {},
+    "STOCK_039": {
+      "STOCK_064": 0.5174821033179139,
+      "STOCK_077": 0.5665558602346759
+    },
+    "STOCK_040": {
+      "STOCK_066": 0.6281621917050523
+    },
+    "STOCK_041": {},
+    "STOCK_042": {
+      "STOCK_004": 0.5598638655568011,
+      "STOCK_006": 0.5796554765504224,
+      "STOCK_037": 0.6443919848304218,
+      "STOCK_066": 0.5515890815410893
+    },
+    "STOCK_043": {},
+    "STOCK_044": {
+      "STOCK_014": 0.514016956585181
+    },
+    "STOCK_045": {},
+    "STOCK_046": {
+      "STOCK_015": 0.6083368452872308
+    },
+    "STOCK_047": {},
+    "STOCK_048": {},
+    "STOCK_049": {
+      "STOCK_027": 0.606261531362242,
+      "STOCK_057": 0.5236563066328781,
+      "STOCK_079": 0.5411610721187314,
+      "STOCK_090": 0.54388076136321
+    },
+    "STOCK_050": {},
+    "STOCK_051": {},
+    "STOCK_052": {},
+    "STOCK_053": {
+      "STOCK_015": 0.5205088805426336
+    },
+    "STOCK_054": {},
+    "STOCK_055": {},
+    "STOCK_056": {
+      "STOCK_078": 0.5329997222498271,
+      "STOCK_083": 0.5944880496818885
+    },
+    "STOCK_057": {
+      "STOCK_049": 0.5236563066328781,
+      "STOCK_099": 0.5691404934341858
+    },
+    "STOCK_058": {},
+    "STOCK_059": {},
+    "STOCK_060": {
+      "STOCK_010": 0.5323120204788955
+    },
+    "STOCK_061": {},
+    "STOCK_062": {},
+    "STOCK_063": {
+      "STOCK_010": 0.5699819823050455,
+      "STOCK_032": 0.500519051132919
+    },
+    "STOCK_064": {
+      "STOCK_039": 0.5174821033179139
+    },
+    "STOCK_065": {},
+    "STOCK_066": {
+      "STOCK_040": 0.6281621917050523,
+      "STOCK_042": 0.5515890815410893
+    },
+    "STOCK_067": {
+      "STOCK_005": 0.5815978366452567
+    },
+    "STOCK_068": {
+      "STOCK_005": 0.5412327431896469,
+      "STOCK_006": 0.5998125059259235,
+      "STOCK_029": 0.5687966006328857,
+      "STOCK_030": 0.5042331277374018
+    },
+    "STOCK_069": {},
+    "STOCK_070": {},
+    "STOCK_071": {
+      "STOCK_083": 0.5595242539945257
+    },
+    "STOCK_072": {
+      "STOCK_098": 0.5790601830644164
+    },
+    "STOCK_073": {},
+    "STOCK_074": {},
+    "STOCK_075": {},
+    "STOCK_076": {},
+    "STOCK_077": {
+      "STOCK_031": 0.6586996130775161,
+      "STOCK_039": 0.5665558602346759
+    },
+    "STOCK_078": {
+      "STOCK_056": 0.5329997222498271,
+      "STOCK_085": 0.5151342225608457
+    },
+    "STOCK_079": {
+      "STOCK_010": 0.6516730256036644,
+      "STOCK_049": 0.5411610721187314
+    },
+    "STOCK_080": {},
+    "STOCK_081": {},
+    "STOCK_082": {},
+    "STOCK_083": {
+      "STOCK_010": 0.5768111498722561,
+      "STOCK_013": 0.5577445032151119,
+      "STOCK_016": 0.5863867864883912,
+      "STOCK_032": 0.5903850597746902,
+      "STOCK_056": 0.5944880496818885,
+      "STOCK_071": 0.5595242539945257
+    },
+    "STOCK_084": {
+      "STOCK_005": 0.608785398582303
+    },
+    "STOCK_085": {
+      "STOCK_078": 0.5151342225608457
+    },
+    "STOCK_086": {},
+    "STOCK_087": {
+      "STOCK_005": 0.5105009746254787
+    },
+    "STOCK_088": {},
+    "STOCK_089": {
+      "STOCK_098": 0.5006421356821718
+    },
+    "STOCK_090": {
+      "STOCK_037": 0.5041697152597109,
+      "STOCK_049": 0.54388076136321
+    },
+    "STOCK_091": {},
+    "STOCK_092": {},
+    "STOCK_093": {},
+    "STOCK_094": {},
+    "STOCK_095": {},
+    "STOCK_096": {},
+    "STOCK_097": {},
+    "STOCK_098": {
+      "STOCK_006": 0.5462848379623084,
+      "STOCK_072": 0.5790601830644164,
+      "STOCK_089": 0.5006421356821718
+    },
+    "STOCK_099": {
+      "STOCK_019": 0.5211445580390535,
+      "STOCK_057": 0.5691404934341858
+    }
+  },
+  "node_attributes": {
+    "STOCK_000": {
+      "volatility": 0.03648717147958817,
+      "stability": 0.9647972763353138,
+      "mean_return": 0.00010411809115984127,
+      "avg_correlation": -0.03681936336595532,
+      "category": "volatile"
+    },
+    "STOCK_001": {
+      "volatility": 0.05200975907164567,
+      "stability": 0.9505615241463709,
+      "mean_return": 0.0069059051654484305,
+      "avg_correlation": -0.013366636242800775,
+      "category": "volatile"
+    },
+    "STOCK_002": {
+      "volatility": 0.04462657781751994,
+      "stability": 0.9572798751581109,
+      "mean_return": -0.003401885716677539,
+      "avg_correlation": 0.0013007838433090745,
+      "category": "volatile"
+    },
+    "STOCK_003": {
+      "volatility": 0.04651918190770972,
+      "stability": 0.9555486581498588,
+      "mean_return": -0.002715339636446191,
+      "avg_correlation": 0.0006515264839665154,
+      "category": "volatile"
+    },
+    "STOCK_004": {
+      "volatility": 0.040418919929246934,
+      "stability": 0.9611513024657458,
+      "mean_return": 0.00488023453079808,
+      "avg_correlation": -0.010039299801868374,
+      "category": "volatile"
+    },
+    "STOCK_005": {
+      "volatility": 0.035854097932054074,
+      "stability": 0.9653869227301103,
+      "mean_return": -6.71024772140173e-05,
+      "avg_correlation": -0.009877297214369552,
+      "category": "volatile"
+    },
+    "STOCK_006": {
+      "volatility": 0.0337440284251116,
+      "stability": 0.9673574622950712,
+      "mean_return": 0.001131914819333087,
+      "avg_correlation": -0.015453380288136462,
+      "category": "moderate"
+    },
+    "STOCK_007": {
+      "volatility": 0.047005911083757373,
+      "stability": 0.9551044453654504,
+      "mean_return": 0.00462400257366694,
+      "avg_correlation": 0.0005638931174247693,
+      "category": "volatile"
+    },
+    "STOCK_008": {
+      "volatility": 0.047481280466753345,
+      "stability": 0.9546709985637206,
+      "mean_return": 0.0016118386668467967,
+      "avg_correlation": -0.010026549262900239,
+      "category": "volatile"
+    },
+    "STOCK_009": {
+      "volatility": 0.04715559566404045,
+      "stability": 0.9549679189422301,
+      "mean_return": -0.006353824790692314,
+      "avg_correlation": 0.0071078567879181,
+      "category": "volatile"
+    },
+    "STOCK_010": {
+      "volatility": 0.034090823324551045,
+      "stability": 0.96703304723762,
+      "mean_return": 0.0052305289636648405,
+      "avg_correlation": 0.022935799727769372,
+      "category": "moderate"
+    },
+    "STOCK_011": {
+      "volatility": 0.05593249522351983,
+      "stability": 0.9470302358564313,
+      "mean_return": -0.0031665332006868612,
+      "avg_correlation": -0.007349911821291839,
+      "category": "volatile"
+    },
+    "STOCK_012": {
+      "volatility": 0.05199314921434597,
+      "stability": 0.9505765325057718,
+      "mean_return": 0.0006315274791443414,
+      "avg_correlation": -0.009770031938031365,
+      "category": "volatile"
+    },
+    "STOCK_013": {
+      "volatility": 0.043844140931918595,
+      "stability": 0.9579974258486754,
+      "mean_return": 0.00964261005299824,
+      "avg_correlation": -0.0003907745321879965,
+      "category": "volatile"
+    },
+    "STOCK_014": {
+      "volatility": 0.039278303542317275,
+      "stability": 0.962206173833862,
+      "mean_return": 0.0018876694467405855,
+      "avg_correlation": -0.018961711625250753,
+      "category": "volatile"
+    },
+    "STOCK_015": {
+      "volatility": 0.036487144109446874,
+      "stability": 0.9647973018123666,
+      "mean_return": 0.0026516748686353374,
+      "avg_correlation": 0.00495625546538864,
+      "category": "volatile"
+    },
+    "STOCK_016": {
+      "volatility": 0.038495442611460526,
+      "stability": 0.962931524750212,
+      "mean_return": 0.0020384592380184837,
+      "avg_correlation": 0.0070943025092996435,
+      "category": "volatile"
+    },
+    "STOCK_017": {
+      "volatility": 0.04694567300870678,
+      "stability": 0.9551593991751315,
+      "mean_return": -0.0013502503069252854,
+      "avg_correlation": -0.006486620237608616,
+      "category": "volatile"
+    },
+    "STOCK_018": {
+      "volatility": 0.04831956679938387,
+      "stability": 0.9539075980934821,
+      "mean_return": 0.0021785895867512655,
+      "avg_correlation": -0.001866177388835758,
+      "category": "volatile"
+    },
+    "STOCK_019": {
+      "volatility": 0.041094549424372705,
+      "stability": 0.9605275529997789,
+      "mean_return": 0.0010465035491302101,
+      "avg_correlation": -0.029026310144734876,
+      "category": "volatile"
+    },
+    "STOCK_020": {
+      "volatility": 0.05034946945096,
+      "stability": 0.9520640787515428,
+      "mean_return": 0.005692525055300552,
+      "avg_correlation": -0.01914151441924577,
+      "category": "volatile"
+    },
+    "STOCK_021": {
+      "volatility": 0.023850935341306244,
+      "stability": 0.9767046798337343,
+      "mean_return": -0.0015814707175780447,
+      "avg_correlation": 0.01848290024189723,
+      "category": "moderate"
+    },
+    "STOCK_022": {
+      "volatility": 0.029319658784485707,
+      "stability": 0.9715154971205845,
+      "mean_return": 0.0015051329509824295,
+      "avg_correlation": 0.01631251450664933,
+      "category": "moderate"
+    },
+    "STOCK_023": {
+      "volatility": 0.0328901907797817,
+      "stability": 0.9681571273758045,
+      "mean_return": -0.00013437000019626193,
+      "avg_correlation": -0.01610257927846034,
+      "category": "moderate"
+    },
+    "STOCK_024": {
+      "volatility": 0.04103185824706262,
+      "stability": 0.9605853961893598,
+      "mean_return": 0.002149455651175496,
+      "avg_correlation": -0.0036408170649056522,
+      "category": "volatile"
+    },
+    "STOCK_025": {
+      "volatility": 0.046211777270879655,
+      "stability": 0.9558294235690727,
+      "mean_return": 0.0021232880382354553,
+      "avg_correlation": 0.008710368624530127,
+      "category": "volatile"
+    },
+    "STOCK_026": {
+      "volatility": 0.0252469114135061,
+      "stability": 0.9753747988582592,
+      "mean_return": 0.0020360189828561403,
+      "avg_correlation": -0.015328032617614748,
+      "category": "moderate"
+    },
+    "STOCK_027": {
+      "volatility": 0.04378776482921863,
+      "stability": 0.9580491683226589,
+      "mean_return": 0.004657403537411813,
+      "avg_correlation": -0.02713302299777193,
+      "category": "volatile"
+    },
+    "STOCK_028": {
+      "volatility": 0.04116818427476552,
+      "stability": 0.9604596213209862,
+      "mean_return": 0.0014596589698372261,
+      "avg_correlation": -0.01026401841142113,
+      "category": "volatile"
+    },
+    "STOCK_029": {
+      "volatility": 0.03097874444603068,
+      "stability": 0.9699521017160481,
+      "mean_return": -0.0007571433411767513,
+      "avg_correlation": 0.000903215395087284,
+      "category": "moderate"
+    },
+    "STOCK_030": {
+      "volatility": 0.04870568263514254,
+      "stability": 0.9535563853218025,
+      "mean_return": -0.0024732599434951754,
+      "avg_correlation": -0.006931040217869224,
+      "category": "volatile"
+    },
+    "STOCK_031": {
+      "volatility": 0.03775813984156499,
+      "stability": 0.9636156649685933,
+      "mean_return": -0.001647030966037203,
+      "avg_correlation": 0.022795146396011302,
+      "category": "volatile"
+    },
+    "STOCK_032": {
+      "volatility": 0.0339662652554143,
+      "stability": 0.9671495421110051,
+      "mean_return": 0.0029310945021434574,
+      "avg_correlation": 0.024212859330567892,
+      "category": "moderate"
+    },
+    "STOCK_033": {
+      "volatility": 0.0501762470879928,
+      "stability": 0.9522211179055656,
+      "mean_return": -0.0033394286983542713,
+      "avg_correlation": 0.016475118291304564,
+      "category": "volatile"
+    },
+    "STOCK_034": {
+      "volatility": 0.06235699242308689,
+      "stability": 0.9413031656328074,
+      "mean_return": 0.0055491292454387595,
+      "avg_correlation": -0.00700319257696508,
+      "category": "volatile"
+    },
+    "STOCK_035": {
+      "volatility": 0.056754227945275085,
+      "stability": 0.9462938245767641,
+      "mean_return": -0.004081333290993088,
+      "avg_correlation": 0.03198231762396608,
+      "category": "volatile"
+    },
+    "STOCK_036": {
+      "volatility": 0.04312700824496108,
+      "stability": 0.9586560333458134,
+      "mean_return": 0.0012338899923560456,
+      "avg_correlation": -0.034628301799216596,
+      "category": "volatile"
+    },
+    "STOCK_037": {
+      "volatility": 0.02944544250919264,
+      "stability": 0.9713967916187752,
+      "mean_return": -0.001088037782377946,
+      "avg_correlation": -0.03551671377304848,
+      "category": "moderate"
+    },
+    "STOCK_038": {
+      "volatility": 0.04352660725336452,
+      "stability": 0.9582889339372672,
+      "mean_return": -0.0008466727999423438,
+      "avg_correlation": -0.0200042736577019,
+      "category": "volatile"
+    },
+    "STOCK_039": {
+      "volatility": 0.04830261876618716,
+      "stability": 0.9539230200311456,
+      "mean_return": -0.004406100594008319,
+      "avg_correlation": 0.029228812689605976,
+      "category": "volatile"
+    },
+    "STOCK_040": {
+      "volatility": 0.04355368927277873,
+      "stability": 0.9582640646854211,
+      "mean_return": 0.0034872469901975857,
+      "avg_correlation": 0.013459023783702138,
+      "category": "volatile"
+    },
+    "STOCK_041": {
+      "volatility": 0.0469400654383936,
+      "stability": 0.9551645151542291,
+      "mean_return": 0.005455458320980615,
+      "avg_correlation": 0.0025108969753135624,
+      "category": "volatile"
+    },
+    "STOCK_042": {
+      "volatility": 0.03774913141731552,
+      "stability": 0.9636240298599342,
+      "mean_return": 0.0003117422027645208,
+      "avg_correlation": -0.028611541135447758,
+      "category": "volatile"
+    },
+    "STOCK_043": {
+      "volatility": 0.04906903919200624,
+      "stability": 0.9532261106191835,
+      "mean_return": 0.00026649244597671553,
+      "avg_correlation": -0.017659657867251287,
+      "category": "volatile"
+    },
+    "STOCK_044": {
+      "volatility": 0.037666875494432636,
+      "stability": 0.9637004164014727,
+      "mean_return": -0.0023336625856724864,
+      "avg_correlation": -0.00191106443098724,
+      "category": "volatile"
+    },
+    "STOCK_045": {
+      "volatility": 0.043811184713663236,
+      "stability": 0.9580276726717759,
+      "mean_return": 0.0009473947495806548,
+      "avg_correlation": -0.004918023432321179,
+      "category": "volatile"
+    },
+    "STOCK_046": {
+      "volatility": 0.04770419000344286,
+      "stability": 0.95446788276824,
+      "mean_return": -0.0006599912297535736,
+      "avg_correlation": -0.008336684330308188,
+      "category": "volatile"
+    },
+    "STOCK_047": {
+      "volatility": 0.03394772077379055,
+      "stability": 0.9671668885266417,
+      "mean_return": 0.0005649266409568899,
+      "avg_correlation": -0.007595601805727451,
+      "category": "moderate"
+    },
+    "STOCK_048": {
+      "volatility": 0.04443680719658834,
+      "stability": 0.9574538096604783,
+      "mean_return": 0.005896721728742603,
+      "avg_correlation": -0.015302950525634513,
+      "category": "volatile"
+    },
+    "STOCK_049": {
+      "volatility": 0.04669067698137162,
+      "stability": 0.9553920962437287,
+      "mean_return": 0.0008500427888077428,
+      "avg_correlation": -0.018828256314395095,
+      "category": "volatile"
+    },
+    "STOCK_050": {
+      "volatility": 0.055108313172323196,
+      "stability": 0.947769994336759,
+      "mean_return": 0.0005844681089172172,
+      "avg_correlation": 0.008316553996411126,
+      "category": "volatile"
+    },
+    "STOCK_051": {
+      "volatility": 0.04657124078020064,
+      "stability": 0.9555011269510114,
+      "mean_return": -0.0010752149442307315,
+      "avg_correlation": 0.013857847822882408,
+      "category": "volatile"
+    },
+    "STOCK_052": {
+      "volatility": 0.062340174443008545,
+      "stability": 0.9413180674677074,
+      "mean_return": 0.0014132616454593395,
+      "avg_correlation": 0.0038540964393677622,
+      "category": "volatile"
+    },
+    "STOCK_053": {
+      "volatility": 0.0573182010078762,
+      "stability": 0.9457890718676382,
+      "mean_return": 0.0020062037899050305,
+      "avg_correlation": 0.0022380350986113164,
+      "category": "volatile"
+    },
+    "STOCK_054": {
+      "volatility": 0.04653080418095625,
+      "stability": 0.9555380462810433,
+      "mean_return": 0.003078344528646543,
+      "avg_correlation": 0.015708229003600915,
+      "category": "volatile"
+    },
+    "STOCK_055": {
+      "volatility": 0.06142146081370137,
+      "stability": 0.9421328255727798,
+      "mean_return": 0.0027642581450390068,
+      "avg_correlation": 0.0007128145310796647,
+      "category": "volatile"
+    },
+    "STOCK_056": {
+      "volatility": 0.03593651033922734,
+      "stability": 0.9653101227917341,
+      "mean_return": -0.001147864782187396,
+      "avg_correlation": -0.0491286231155834,
+      "category": "volatile"
+    },
+    "STOCK_057": {
+      "volatility": 0.04878764106845537,
+      "stability": 0.9534818688187889,
+      "mean_return": 0.003179072952341837,
+      "avg_correlation": 0.003465129320263898,
+      "category": "volatile"
+    },
+    "STOCK_058": {
+      "volatility": 0.016031423821810515,
+      "stability": 0.9842215275571812,
+      "mean_return": -0.0007344296551880754,
+      "avg_correlation": -0.010288499128441436,
+      "category": "stable"
+    },
+    "STOCK_059": {
+      "volatility": 0.04770711521783564,
+      "stability": 0.9544652178792195,
+      "mean_return": -3.006690795672733e-05,
+      "avg_correlation": -0.006718204776471451,
+      "category": "volatile"
+    },
+    "STOCK_060": {
+      "volatility": 0.040326357356171766,
+      "stability": 0.9612368204736684,
+      "mean_return": 0.0011840570522119176,
+      "avg_correlation": 0.01454408831387711,
+      "category": "volatile"
+    },
+    "STOCK_061": {
+      "volatility": 0.031349557852095714,
+      "stability": 0.9696033632695933,
+      "mean_return": 0.0037033246084480715,
+      "avg_correlation": 0.005980276912383356,
+      "category": "moderate"
+    },
+    "STOCK_062": {
+      "volatility": 0.05303793428734993,
+      "stability": 0.9496334058247924,
+      "mean_return": 0.0014864296087314368,
+      "avg_correlation": -0.02151111316996105,
+      "category": "volatile"
+    },
+    "STOCK_063": {
+      "volatility": 0.04191970779010674,
+      "stability": 0.9597668539363577,
+      "mean_return": 0.002877853811598627,
+      "avg_correlation": 0.010068389014029535,
+      "category": "volatile"
+    },
+    "STOCK_064": {
+      "volatility": 0.031904570799943764,
+      "stability": 0.969081859211835,
+      "mean_return": -0.00011773305096090513,
+      "avg_correlation": 0.017120954945605723,
+      "category": "moderate"
+    },
+    "STOCK_065": {
+      "volatility": 0.03706869503464031,
+      "stability": 0.9642562780921642,
+      "mean_return": -0.0010858482298873337,
+      "avg_correlation": -0.003593695359106917,
+      "category": "volatile"
+    },
+    "STOCK_066": {
+      "volatility": 0.03920001519161496,
+      "stability": 0.9622786618374067,
+      "mean_return": -0.00020598781775716144,
+      "avg_correlation": 0.030761279071978512,
+      "category": "volatile"
+    },
+    "STOCK_067": {
+      "volatility": 0.06378319833373605,
+      "stability": 0.9400411677551936,
+      "mean_return": -0.006226397501754043,
+      "avg_correlation": -0.0005181395339057136,
+      "category": "volatile"
+    },
+    "STOCK_068": {
+      "volatility": 0.035161801821074534,
+      "stability": 0.9660325547569306,
+      "mean_return": 0.0010151047579826274,
+      "avg_correlation": -0.004844395209602144,
+      "category": "volatile"
+    },
+    "STOCK_069": {
+      "volatility": 0.0543538612496557,
+      "stability": 0.9484481792619096,
+      "mean_return": 0.004177663107971837,
+      "avg_correlation": 0.014452655386438414,
+      "category": "volatile"
+    },
+    "STOCK_070": {
+      "volatility": 0.04248590849318244,
+      "stability": 0.9592455800629557,
+      "mean_return": 0.00708422138909975,
+      "avg_correlation": 0.016025998052384235,
+      "category": "volatile"
+    },
+    "STOCK_071": {
+      "volatility": 0.03408408844561188,
+      "stability": 0.9670393454203076,
+      "mean_return": -0.0015602718856997844,
+      "avg_correlation": -0.04107689363897171,
+      "category": "moderate"
+    },
+    "STOCK_072": {
+      "volatility": 0.01736533950336772,
+      "stability": 0.9829310682907236,
+      "mean_return": 0.00011683571314480687,
+      "avg_correlation": -0.01207781877766477,
+      "category": "stable"
+    },
+    "STOCK_073": {
+      "volatility": 0.052175896416891264,
+      "stability": 0.950411431591835,
+      "mean_return": -0.0028969717210139993,
+      "avg_correlation": 0.005038455900887089,
+      "category": "volatile"
+    },
+    "STOCK_074": {
+      "volatility": 0.05431902885305653,
+      "stability": 0.9484795139170089,
+      "mean_return": 0.004271366423953641,
+      "avg_correlation": -0.01491070707459742,
+      "category": "volatile"
+    },
+    "STOCK_075": {
+      "volatility": 0.04726507381523146,
+      "stability": 0.9548680892765357,
+      "mean_return": 0.0036548660614502022,
+      "avg_correlation": -0.007433547433944578,
+      "category": "volatile"
+    },
+    "STOCK_076": {
+      "volatility": 0.04782108665266227,
+      "stability": 0.9543614007564688,
+      "mean_return": -0.0017110745926658046,
+      "avg_correlation": -0.010796425545429032,
+      "category": "volatile"
+    },
+    "STOCK_077": {
+      "volatility": 0.035357605816211876,
+      "stability": 0.9658498613256062,
+      "mean_return": -0.0032106558696275225,
+      "avg_correlation": 0.022205932377517765,
+      "category": "volatile"
+    },
+    "STOCK_078": {
+      "volatility": 0.04155236402746286,
+      "stability": 0.9601053528727171,
+      "mean_return": -0.0019407185945618376,
+      "avg_correlation": 0.014359327038102386,
+      "category": "volatile"
+    },
+    "STOCK_079": {
+      "volatility": 0.03490909299567435,
+      "stability": 0.9662684449948878,
+      "mean_return": 0.005651246907072395,
+      "avg_correlation": 0.011355452474018113,
+      "category": "moderate"
+    },
+    "STOCK_080": {
+      "volatility": 0.05446801831608414,
+      "stability": 0.9483454999393287,
+      "mean_return": 0.004833845974496028,
+      "avg_correlation": 0.00107504067414737,
+      "category": "volatile"
+    },
+    "STOCK_081": {
+      "volatility": 0.044032607045341524,
+      "stability": 0.9578244905875537,
+      "mean_return": 0.002787933183794758,
+      "avg_correlation": 0.006686344973753454,
+      "category": "volatile"
+    },
+    "STOCK_082": {
+      "volatility": 0.030478995991119893,
+      "stability": 0.97042249661595,
+      "mean_return": 0.0011650586996154557,
+      "avg_correlation": 0.01245592020115674,
+      "category": "moderate"
+    },
+    "STOCK_083": {
+      "volatility": 0.034503203203522445,
+      "stability": 0.9666475627173728,
+      "mean_return": 0.005701935109153593,
+      "avg_correlation": 0.027197931194762586,
+      "category": "moderate"
+    },
+    "STOCK_084": {
+      "volatility": 0.036477946204911044,
+      "stability": 0.9648058636090852,
+      "mean_return": -0.0011969101580897982,
+      "avg_correlation": -0.0017726972941159845,
+      "category": "volatile"
+    },
+    "STOCK_085": {
+      "volatility": 0.04331247838307393,
+      "stability": 0.9584856126227882,
+      "mean_return": 0.002316345452245006,
+      "avg_correlation": -0.012223451117705557,
+      "category": "volatile"
+    },
+    "STOCK_086": {
+      "volatility": 0.04973926205513811,
+      "stability": 0.9526175081250553,
+      "mean_return": -0.002010863652232759,
+      "avg_correlation": 0.011432512229268227,
+      "category": "volatile"
+    },
+    "STOCK_087": {
+      "volatility": 0.0504083355483031,
+      "stability": 0.9520107239800315,
+      "mean_return": 0.005721019573626276,
+      "avg_correlation": 0.008755730237490504,
+      "category": "volatile"
+    },
+    "STOCK_088": {
+      "volatility": 0.04899676382385989,
+      "stability": 0.9532917874357836,
+      "mean_return": 0.00798348371552658,
+      "avg_correlation": -0.0059139344889871034,
+      "category": "volatile"
+    },
+    "STOCK_089": {
+      "volatility": 0.04608049550560415,
+      "stability": 0.9559493789401626,
+      "mean_return": -0.002899159761965951,
+      "avg_correlation": -0.011462124745146041,
+      "category": "volatile"
+    },
+    "STOCK_090": {
+      "volatility": 0.03722576549576947,
+      "stability": 0.9641102576371341,
+      "mean_return": 0.0021879836600962404,
+      "avg_correlation": -0.02019223428211034,
+      "category": "volatile"
+    },
+    "STOCK_091": {
+      "volatility": 0.04802438308473192,
+      "stability": 0.954176273128896,
+      "mean_return": -0.0011022161340228781,
+      "avg_correlation": -0.007533579696250205,
+      "category": "volatile"
+    },
+    "STOCK_092": {
+      "volatility": 0.052846980413713704,
+      "stability": 0.9498056399487914,
+      "mean_return": -0.0003448432417058215,
+      "avg_correlation": -0.017211564125020777,
+      "category": "volatile"
+    },
+    "STOCK_093": {
+      "volatility": 0.04962479907829135,
+      "stability": 0.9527213923281267,
+      "mean_return": 0.0026529013179456057,
+      "avg_correlation": -0.00512958242170135,
+      "category": "volatile"
+    },
+    "STOCK_094": {
+      "volatility": 0.053600037276559404,
+      "stability": 0.9491267697606487,
+      "mean_return": 0.0008515464307988836,
+      "avg_correlation": 0.02851190467864637,
+      "category": "volatile"
+    },
+    "STOCK_095": {
+      "volatility": 0.04375403901216665,
+      "stability": 0.9580801248409285,
+      "mean_return": 0.001057820964508653,
+      "avg_correlation": 0.0055563558743936285,
+      "category": "volatile"
+    },
+    "STOCK_096": {
+      "volatility": 0.041005287671965304,
+      "stability": 0.9606099141305355,
+      "mean_return": 0.00512326704581262,
+      "avg_correlation": -0.006484553398014982,
+      "category": "volatile"
+    },
+    "STOCK_097": {
+      "volatility": 0.04065456091531281,
+      "stability": 0.9609336638283169,
+      "mean_return": 0.0023220066581076397,
+      "avg_correlation": -0.008377247955497498,
+      "category": "volatile"
+    },
+    "STOCK_098": {
+      "volatility": 0.043128431147715286,
+      "stability": 0.9586547256695297,
+      "mean_return": -0.0026606409209221447,
+      "avg_correlation": -0.004168465838867224,
+      "category": "volatile"
+    },
+    "STOCK_099": {
+      "volatility": 0.029800525802357983,
+      "stability": 0.9710618463909414,
+      "mean_return": 0.0003528585942807093,
+      "avg_correlation": 0.0013287584720671059,
+      "category": "moderate"
+    }
+  },
+  "num_nodes": 100,
+  "num_edges": 47
+}

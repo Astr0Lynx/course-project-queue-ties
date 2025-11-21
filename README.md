@@ -15,7 +15,7 @@ Welcome to the official repository for the **Stock Market Tangle** course projec
 This project analyzes stock market correlations using graph-based algorithms to:
 - Identify market segments (connected components)
 - Find correlation chains (shortest paths)
-- Detect influential stocks (centrality)
+gi- Detect influential stocks (centrality)
 - Discover sector clusters (community detection)
 - Generate portfolio recommendations (embeddings)
 
