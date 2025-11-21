@@ -160,6 +160,81 @@ class Graph:
         """
         return self.adjacency_list.get(node1, {}).get(node2)
     
+    def nodes(self) -> List[str]:
+        """
+        Alias for get_nodes() for compatibility with algorithm implementations.
+        
+        Returns:
+            List of node identifiers
+        """
+        return self.get_nodes()
+    
+    def neighbors(self, node: str) -> Dict[str, float]:
+        """
+        Alias for get_neighbors() for compatibility with algorithm implementations.
+        
+        Args:
+            node: Node identifier
+        
+        Returns:
+            Dictionary mapping neighbor nodes to edge weights
+        """
+        return self.get_neighbors(node)
+    
+    def number_of_nodes(self) -> int:
+        """
+        Get the number of nodes in the graph.
+        
+        Returns:
+            Number of nodes
+        """
+        return self.num_nodes
+    
+    def number_of_edges(self) -> int:
+        """
+        Get the number of edges in the graph.
+        
+        Returns:
+            Number of edges
+        """
+        return self.num_edges
+    
+    def degree(self, node: str) -> float:
+        """
+        Get weighted degree (sum of edge weights) of a node.
+        
+        Args:
+            node: Node identifier
+        
+        Returns:
+            Sum of weights of all edges connected to the node
+        """
+        return sum(self.adjacency_list.get(node, {}).values())
+    
+    def total_edge_weight(self) -> float:
+        """
+        Get total weight of all edges in the graph.
+        
+        Returns:
+            Sum of all edge weights (counting each edge once)
+        """
+        return sum(self.degree(node) for node in self.get_nodes()) / 2.0
+    
+    def copy(self) -> "Graph":
+        """
+        Create a deep copy of the graph.
+        
+        Returns:
+            New Graph object with same structure and data
+        """
+        from copy import deepcopy
+        new_graph = Graph()
+        new_graph.adjacency_list = deepcopy(self.adjacency_list)
+        new_graph.node_attributes = deepcopy(self.node_attributes)
+        new_graph.num_nodes = self.num_nodes
+        new_graph.num_edges = self.num_edges
+        return new_graph
+    
     def __str__(self) -> str:
         """String representation of the graph."""
         return (f"Graph(nodes={self.num_nodes}, edges={self.num_edges})")
@@ -299,6 +374,67 @@ def save_graph(graph: Graph, filename: str) -> None:
         json.dump(graph_data, f, indent=2)
     
     print(f"Graph saved to {filename}")
+
+
+def save_graph_to_json(graph: Graph, filename: str) -> None:
+    """
+    Save graph to JSON in simplified format for algorithm compatibility.
+    
+    Format: {"nodes": [...], "edges": [[u, v, weight], ...]}
+    Edges stored with u < v to avoid duplicates.
+    
+    Args:
+        graph: Graph object
+        filename: Output filename path
+    """
+    nodes = graph.get_nodes()
+    edges = []
+    
+    # Collect unique edges (u, v, weight) where u < v
+    seen = set()
+    for node_u in nodes:
+        for node_v, weight in graph.get_neighbors(node_u).items():
+            edge_key = tuple(sorted([node_u, node_v]))
+            if edge_key not in seen:
+                edges.append([node_u, node_v, weight])
+                seen.add(edge_key)
+    
+    payload = {
+        "nodes": nodes,
+        "edges": edges
+    }
+    
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(payload, f, indent=2)
+
+
+def load_graph_from_json(filename: str) -> Graph:
+    """
+    Load graph from simplified JSON format.
+    
+    Expected format: {"nodes": [...], "edges": [[u, v, weight], ...]}
+    
+    Args:
+        filename: Input filename path
+    
+    Returns:
+        Graph object
+    """
+    with open(filename, 'r', encoding='utf-8') as f:
+        payload = json.load(f)
+    
+    graph = Graph()
+    
+    # Add nodes
+    for node in payload.get("nodes", []):
+        graph.add_node(node)
+    
+    # Add edges
+    for edge in payload.get("edges", []):
+        node_u, node_v, weight = edge
+        graph.add_edge(node_u, node_v, float(weight))
+    
+    return graph
 
 
 def load_graph(filename: str) -> Graph:
