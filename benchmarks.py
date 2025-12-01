@@ -10,8 +10,15 @@ Usage:
     # Run specific algorithm
     python benchmarks.py union_find
     python benchmarks.py bfs
-    python benchmarks.py union-find  # Also works (normalized)
-    python benchmarks.py BFS  # Case-insensitive
+    python benchmarks.py louvain
+    python benchmarks.py girvan_newman
+    python benchmarks.py dfs
+    python benchmarks.py pagerank
+    python benchmarks.py market_disruption
+    
+    # Names are normalized (case-insensitive, hyphens/underscores)
+    python benchmarks.py Girvan-Newman  # Also works
+    python benchmarks.py market-disruption  # Also works
     
     # Show help
     python benchmarks.py --help
@@ -19,6 +26,15 @@ Usage:
 Output:
     Results are saved to results/<algorithm>_benchmarks.json
     If no algorithm is specified, saves to results/all_benchmarks.json
+
+Note:
+    Algorithms from different branches:
+    - union_find, bfs: guntesh-data-foundation
+    - louvain: main / saanvi-louvian  
+    - girvan_newman: avani-girvan-newman
+    - dfs, pagerank, market_disruption: main
+    
+    Make sure the required algorithm files are in src/ before running!
 """
 
 import sys
@@ -57,12 +73,44 @@ class UniversalBenchmarkRunner:
         'union_find': {
             'display_name': 'Union-Find',
             'import_path': 'union_find',
-            'functions': ['find_market_segments', 'analyze_market_segments']
+            'functions': ['find_market_segments', 'analyze_market_segments'],
+            'branch': 'guntesh-data-foundation'
         },
         'bfs': {
             'display_name': 'BFS',
             'import_path': 'bfs',
-            'functions': ['bfs_shortest_path', 'analyze_graph_connectivity']
+            'functions': ['bfs_shortest_path', 'analyze_graph_connectivity'],
+            'branch': 'guntesh-data-foundation'
+        },
+        'louvain': {
+            'display_name': 'Louvain',
+            'import_path': 'louvain',
+            'functions': ['louvain', 'compute_modularity'],
+            'branch': 'main / saanvi-louvian'
+        },
+        'girvan_newman': {
+            'display_name': 'Girvan-Newman',
+            'import_path': 'girvan_newman',
+            'functions': ['girvan_newman', 'modularity', 'betweenness_centrality'],
+            'branch': 'avani-girvan-newman'
+        },
+        'dfs': {
+            'display_name': 'DFS',
+            'import_path': 'dfs',
+            'functions': ['DFS', 'analyze_market_connectivity'],
+            'branch': 'main'
+        },
+        'pagerank': {
+            'display_name': 'PageRank',
+            'import_path': 'pagerank',
+            'functions': ['PageRank', 'identify_market_influencers'],
+            'branch': 'main'
+        },
+        'market_disruption': {
+            'display_name': 'Market Disruption',
+            'import_path': 'market_disruption',
+            'functions': ['MarketDisruptionSimulator'],
+            'branch': 'main'
         }
     }
     
@@ -158,6 +206,196 @@ class UniversalBenchmarkRunner:
         
         return result
     
+    def benchmark_louvain(self, graph, stock_attributes: Dict,
+                         scenario: str, num_stocks: int) -> Dict:
+        """Benchmark Louvain algorithm."""
+        from louvain import louvain
+        
+        print(f"  Benchmarking Louvain...")
+        
+        mem_before = get_memory_usage()
+        start_time = time.time()
+        
+        communities, modularity_score = louvain(graph)
+        
+        end_time = time.time()
+        mem_after = get_memory_usage()
+        
+        runtime = end_time - start_time
+        memory_used = mem_after - mem_before
+        num_communities = len(set(communities.values()))
+        
+        result = {
+            'algorithm': 'Louvain',
+            'scenario': scenario,
+            'num_stocks': num_stocks,
+            'num_edges': graph.num_edges,
+            'runtime_seconds': runtime,
+            'memory_mb': memory_used,
+            'num_communities': num_communities,
+            'modularity': modularity_score,
+        }
+        
+        print(f"    > Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
+        print(f"    > Communities: {num_communities} | Modularity: {modularity_score:.4f}")
+        
+        return result
+    
+    def benchmark_girvan_newman(self, graph, stock_attributes: Dict,
+                               scenario: str, num_stocks: int) -> Dict:
+        """Benchmark Girvan-Newman algorithm."""
+        from girvan_newman import girvan_newman, modularity
+        
+        print(f"  Benchmarking Girvan-Newman...")
+        
+        mem_before = get_memory_usage()
+        start_time = time.time()
+        
+        communities, modularity_score = girvan_newman(graph, max_iterations=10)
+        
+        end_time = time.time()
+        mem_after = get_memory_usage()
+        
+        runtime = end_time - start_time
+        memory_used = mem_after - mem_before
+        num_communities = len(communities)
+        
+        result = {
+            'algorithm': 'Girvan-Newman',
+            'scenario': scenario,
+            'num_stocks': num_stocks,
+            'num_edges': graph.num_edges,
+            'runtime_seconds': runtime,
+            'memory_mb': memory_used,
+            'num_communities': num_communities,
+            'modularity': modularity_score,
+        }
+        
+        print(f"    > Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
+        print(f"    > Communities: {num_communities} | Modularity: {modularity_score:.4f}")
+        
+        return result
+    
+    def benchmark_dfs(self, graph, stock_attributes: Dict,
+                     scenario: str, num_stocks: int) -> Dict:
+        """Benchmark DFS algorithm."""
+        from dfs import DFS, analyze_market_connectivity
+        
+        print(f"  Benchmarking DFS...")
+        
+        nodes = graph.get_nodes()
+        if len(nodes) < 1:
+            print(f"    Warning: Skipped (insufficient nodes)")
+            return None
+        
+        mem_before = get_memory_usage()
+        start_time = time.time()
+        
+        dfs = DFS(graph)
+        components = dfs.find_connected_components()
+        connectivity_info = dfs.get_connectivity_info()
+        
+        end_time = time.time()
+        mem_after = get_memory_usage()
+        
+        runtime = end_time - start_time
+        memory_used = mem_after - mem_before
+        
+        result = {
+            'algorithm': 'DFS',
+            'scenario': scenario,
+            'num_stocks': num_stocks,
+            'num_edges': graph.num_edges,
+            'runtime_seconds': runtime,
+            'memory_mb': memory_used,
+            'num_components': len(components),
+            'connectivity_ratio': connectivity_info.get('connectivity_ratio', 0),
+            'has_cycle': connectivity_info.get('has_cycle', False),
+        }
+        
+        print(f"    > Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
+        print(f"    > Components: {len(components)} | Connectivity: {result['connectivity_ratio']:.3f}")
+        
+        return result
+    
+    def benchmark_pagerank(self, graph, stock_attributes: Dict,
+                          scenario: str, num_stocks: int) -> Dict:
+        """Benchmark PageRank algorithm."""
+        from pagerank import PageRank
+        
+        print(f"  Benchmarking PageRank...")
+        
+        if graph.num_nodes < 1:
+            print(f"    Warning: Skipped (insufficient nodes)")
+            return None
+        
+        mem_before = get_memory_usage()
+        start_time = time.time()
+        
+        pr = PageRank(graph, damping_factor=0.85)
+        scores = pr.calculate_pagerank(max_iterations=100, tolerance=1e-6)
+        
+        end_time = time.time()
+        mem_after = get_memory_usage()
+        
+        runtime = end_time - start_time
+        memory_used = mem_after - mem_before
+        
+        top_stocks = pr.get_top_stocks(5)
+        avg_score = sum(scores.values()) / len(scores) if scores else 0
+        
+        result = {
+            'algorithm': 'PageRank',
+            'scenario': scenario,
+            'num_stocks': num_stocks,
+            'num_edges': graph.num_edges,
+            'runtime_seconds': runtime,
+            'memory_mb': memory_used,
+            'iterations': pr.iterations,
+            'avg_score': avg_score,
+            'top_score': top_stocks[0][1] if top_stocks else 0,
+        }
+        
+        print(f"    > Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
+        print(f"    > Iterations: {pr.iterations} | Top score: {result['top_score']:.4f}")
+        
+        return result
+    
+    def benchmark_market_disruption(self, graph, stock_attributes: Dict,
+                                   scenario: str, num_stocks: int) -> Dict:
+        """Benchmark Market Disruption Simulator."""
+        from market_disruption import MarketDisruptionSimulator
+        
+        print(f"  Benchmarking Market Disruption...")
+        
+        mem_before = get_memory_usage()
+        start_time = time.time()
+        
+        simulator = MarketDisruptionSimulator(graph, stock_attributes)
+        crash_result = simulator.simulate_market_crash(severity=0.5)
+        
+        end_time = time.time()
+        mem_after = get_memory_usage()
+        
+        runtime = end_time - start_time
+        memory_used = mem_after - mem_before
+        
+        result = {
+            'algorithm': 'Market Disruption',
+            'scenario': scenario,
+            'num_stocks': num_stocks,
+            'num_edges': graph.num_edges,
+            'runtime_seconds': runtime,
+            'memory_mb': memory_used,
+            'network_fragility': crash_result.get('network_fragility', 0),
+            'edges_added': crash_result.get('edges_added', 0),
+        }
+        
+        print(f"    > Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
+        print(f"    > Fragility: {result['network_fragility']:.3f} | Edges added: {result['edges_added']}")
+        
+        return result
+    
     def run_benchmark(self, algorithm: str, sizes: List[int], scenarios: List[str]) -> List[Dict]:
         """
         Run benchmark for a specific algorithm.
@@ -209,8 +447,18 @@ class UniversalBenchmarkRunner:
                     result = self.benchmark_union_find(graph, stock_attrs, scenario, size)
                 elif algorithm == 'bfs':
                     result = self.benchmark_bfs(graph, stock_attrs, scenario, size)
+                elif algorithm == 'louvain':
+                    result = self.benchmark_louvain(graph, stock_attrs, scenario, size)
+                elif algorithm == 'girvan_newman':
+                    result = self.benchmark_girvan_newman(graph, stock_attrs, scenario, size)
+                elif algorithm == 'dfs':
+                    result = self.benchmark_dfs(graph, stock_attrs, scenario, size)
+                elif algorithm == 'pagerank':
+                    result = self.benchmark_pagerank(graph, stock_attrs, scenario, size)
+                elif algorithm == 'market_disruption':
+                    result = self.benchmark_market_disruption(graph, stock_attrs, scenario, size)
                 else:
-                    print(f"  ⚠ No benchmark implementation for {algorithm}")
+                    print(f"  Warning: No benchmark implementation for {algorithm}")
                     continue
                 
                 if result:
@@ -287,11 +535,15 @@ def main():
             print("\nAvailable algorithms:")
             runner = UniversalBenchmarkRunner()
             for algo, info in runner.ALGORITHMS.items():
-                print(f"  - {algo} ({info['display_name']})")
+                branch_info = info.get('branch', 'unknown')
+                print(f"  - {algo} ({info['display_name']}) [from: {branch_info}]")
+            print("\nNote: Some algorithms may only be available on specific branches.")
+            print("Make sure the required algorithm files are present in src/")
             print("\nExamples:")
             print("  python benchmarks.py")
             print("  python benchmarks.py union_find")
-            print("  python benchmarks.py bfs")
+            print("  python benchmarks.py louvain")
+            print("  python benchmarks.py girvan_newman")
             sys.exit(0)
         
         # Normalize algorithm name
