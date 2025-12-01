@@ -545,8 +545,6 @@ def main():
         print("  - Scalability analysis")
         print("  - Component distribution")
         print("  - Summary table")
-    print("\nThese can be used in your report and presentation!")
-    print("="*70)
 
 
 if __name__ == "__main__":

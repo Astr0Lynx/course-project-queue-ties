@@ -30,7 +30,7 @@ Note:
     Algorithms from different branches:
     - union_find, bfs: guntesh-data-foundation
     - louvain: main / saanvi-louvian  
-    - girvan_newman: avani-girvan-newman
+    - girvan_newman: avani-girvan-new-man
     - dfs, pagerank: main
     
     Make sure the required algorithm files are in src/ before running!
@@ -91,7 +91,7 @@ class UniversalBenchmarkRunner:
             'display_name': 'Girvan-Newman',
             'import_path': 'girvan_newman',
             'functions': ['girvan_newman', 'modularity', 'betweenness_centrality'],
-            'branch': 'avani-girvan-newman'
+            'branch': 'avani-girvan-new-man'
         },
         'dfs': {
             'display_name': 'DFS',
@@ -243,22 +243,67 @@ class UniversalBenchmarkRunner:
     def benchmark_girvan_newman(self, graph, stock_attributes: Dict,
                                 scenario: str, num_stocks: int) -> Dict:
         """Benchmark Girvan-Newman algorithm."""
-        from src.girvan_newman import girvan_newman, modularity
-        
+        # Try to import an implementation from src/girvan_newman
+        impl = None
+        modularity_func = None
+        try:
+            from src.girvan_newman import girvan_newman_algorithm as impl
+        except Exception:
+            try:
+                from src.girvan_newman import girvan_newman as impl
+            except Exception:
+                impl = None
+
+        try:
+            from src.girvan_newman import modularity as modularity_func
+        except Exception:
+            modularity_func = None
+
         print(f"  Benchmarking Girvan-Newman...")
-        
+
+        if impl is None:
+            print("    ⚠ Skipped Girvan-Newman: implementation not found in src/girvan_newman")
+            return None
+
         mem_before = get_memory_usage()
         start_time = time.perf_counter()
-        
-        communities = girvan_newman_algorithm(graph, max_iterations=5)
-        
+
+        # Call implementation robustly
+        try:
+            try:
+                communities = impl(graph, max_iterations=5)
+            except TypeError:
+                # fallback to positional or different kwarg name
+                try:
+                    communities = impl(graph, 5)
+                except TypeError:
+                    communities = impl(graph)
+        except Exception as e:
+            print(f"    ⚠ Girvan-Newman failed at runtime: {e}")
+            return None
+
         end_time = time.perf_counter()
         mem_after = get_memory_usage()
-        
+
         runtime = end_time - start_time
-        memory_used = max(0, mem_after - mem_before)  # Prevent negative memory
-        num_communities = len(communities)
-        
+        memory_used = max(0, mem_after - mem_before)
+
+        # Normalize communities to count
+        if isinstance(communities, dict):
+            num_communities = len(set(communities.values()))
+        elif isinstance(communities, (list, tuple, set)):
+            num_communities = len(communities)
+        else:
+            num_communities = 1
+
+        # Compute modularity if helper exists and communities are in expected form
+        modularity_score = 0.0
+        if modularity_func is not None:
+            try:
+                modularity_score = modularity_func(graph, communities)
+            except Exception:
+                modularity_score = 0.0
+
         result = {
             'algorithm': 'Girvan-Newman',
             'scenario': scenario,
@@ -269,10 +314,10 @@ class UniversalBenchmarkRunner:
             'num_communities': num_communities,
             'modularity': modularity_score,
         }
-        
+
         print(f"    > Runtime: {runtime*1000:.4f}ms | Memory: {memory_used:.4f}MB")
         print(f"    > Communities: {num_communities} | Modularity: {modularity_score:.4f}")
-        
+
         return result
     
     def benchmark_dfs(self, graph, stock_attributes: Dict,

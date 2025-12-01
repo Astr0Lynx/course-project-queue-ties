@@ -1,9 +1,11 @@
-Welcome to the public and hopefully official repository for the course project of the course 'Algorithm Analysis and Design'!
+Welcome to the official repository for the course project of 'Algorithm Analysis and Design'!
+
 Team Name: Queue-ties
+---
 
-All the team members pelase use separate branches for your work and separate files for each algorithm to ensure a clean work flow and avoid merge conflicts :D
+## Project Overview
 
-Cheers! Happy Coding!
+This project implements various graph algorithms to solve the problem outlined in the [Problem Statement](https://docs.google.com/document/d/1RuMr-KCwL8jYXYH68ogDT0ZZxvLw33FtoMN3c2GChSI/edit?usp=sharing). The repository is organized to facilitate seamless navigation and evaluation.
 
 ---
 
@@ -53,40 +55,45 @@ python src/union_find.py
 python src/bfs.py
 
 # Girvan-Newman (Avani)
-python girvan_newman.py
+python src/girvan_newman.py
 
-# Add other algorithms as they're implemented...
+# DFS (Khushi)
+python src/dfs.py
+
+# PageRank (Khushi)
+python src/pagerank.py
+
+# Louvain (Saanvi)
+python src/louvain.py
+
+# Node2Vec (Vaibhavi)
+python src/node2vec.py
+
+# Recommendations (Vaibhavi)
+python src/recommendations.py
 ```
 
 ### Run Tests
 
 ```bash
-# All tests
+# Run all tests using pytest
 pytest
-
-# Specific algorithm tests
-pytest tests/test_union_find.py
-pytest tests/test_bfs.py
-pytest tests/test_girvan_newman.py
 ```
 
 ### Run Benchmarks
-
+```bash
+# Run benchmarks for all algorithms
+python benchmarks/run_all_benchmarks.py
+```
 ```bash
 # See USAGE_GUIDE.md for detailed instructions
-python benchmarks/benchmark_yourname.py
 python visualize_results.py
 ```
 
 ---
 
 ## Documentation
-
-- **[USAGE_GUIDE.md](USAGE_GUIDE.md)** - How to benchmark your algorithm and generate visualizations
 - **[TESTCASES.md](TESTCASES.md)** - Standardized test cases for all algorithms
-- **[PLAN.md](PLAN.md)** - Task assignments and timeline
-
----
 
 ## Repository Structure
 
@@ -113,4 +120,14 @@ course-project-queue-ties/
 - **Khushi Dhingra** - DFS, PageRank
 - **Saanvi Jain** - Louvain
 - **Vaibhavi Kolipaka** - Node2Vec, Recommendations
+
+---
+
+## Notes 
+
+- Each algorithm is implemented in a separate file to ensure modularity.
+- The repository includes detailed documentation for setup, usage, and testing.
+- Please refer to the `USAGE_GUIDE.md` for instructions on running benchmarks and visualizing results.
+- Test cases are standardized and can be found in `TESTCASES.md`.
+- If you encounter any issues, feel free to reach out to the team members listed above.
 
