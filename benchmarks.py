@@ -200,9 +200,9 @@ class UniversalBenchmarkRunner:
         return result
     
     def benchmark_louvain(self, graph, stock_attributes: Dict,
-                         scenario: str, num_stocks: int) -> Dict:
+                          scenario: str, num_stocks: int) -> Dict:
         """Benchmark Louvain algorithm."""
-        from louvain import louvain
+        from src.louvain import louvain
         
         print(f"  Benchmarking Louvain...")
         
@@ -235,9 +235,9 @@ class UniversalBenchmarkRunner:
         return result
     
     def benchmark_girvan_newman(self, graph, stock_attributes: Dict,
-                               scenario: str, num_stocks: int) -> Dict:
+                                scenario: str, num_stocks: int) -> Dict:
         """Benchmark Girvan-Newman algorithm."""
-        from girvan_newman import girvan_newman, modularity
+        from src.girvan_newman import girvan_newman, modularity
         
         print(f"  Benchmarking Girvan-Newman...")
         
@@ -272,7 +272,7 @@ class UniversalBenchmarkRunner:
     def benchmark_dfs(self, graph, stock_attributes: Dict,
                      scenario: str, num_stocks: int) -> Dict:
         """Benchmark DFS algorithm."""
-        from dfs import DFS, analyze_market_connectivity
+        from src.dfs import DFS, analyze_market_connectivity
         
         print(f"  Benchmarking DFS...")
         
@@ -314,7 +314,7 @@ class UniversalBenchmarkRunner:
     def benchmark_pagerank(self, graph, stock_attributes: Dict,
                           scenario: str, num_stocks: int) -> Dict:
         """Benchmark PageRank algorithm."""
-        from pagerank import PageRank
+        from src.pagerank import PageRank
         
         print(f"  Benchmarking PageRank...")
         
