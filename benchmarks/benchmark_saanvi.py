@@ -34,7 +34,7 @@ def main():
 
     generator = StockDataGenerator(seed=42)
 
-    sizes = [50, 100, 200]
+    sizes = [50, 100, 200, 500]
     scenarios = ["stable", "normal", "volatile", "crash"]
 
     results = []
@@ -63,15 +63,13 @@ def main():
             mem_before = get_memory_usage()
             start_time = time.time()
 
-            communities, modularity = louvain(graph)
+            partition, mod_score = louvain(graph, random_state=42)
 
             end_time = time.time()
             mem_after = get_memory_usage()
 
-            # Count number of communities
-            num_comms = len(set(communities.values()))
+            num_communities = len(partition)
 
-            # Save record
             results.append({
                 "algorithm": "Louvain",
                 "scenario": scenario,
@@ -79,16 +77,16 @@ def main():
                 "num_edges": graph.num_edges,
                 "runtime_seconds": end_time - start_time,
                 "memory_mb": mem_after - mem_before,
-                "num_communities": num_comms,
-                "modularity": modularity
+                "num_communities": num_communities,
+                "modularity": mod_score
             })
 
-            print(f"   ✔ communities={num_comms}, modularity={modularity:.4f}, time={(end_time-start_time):.4f}s")
+            print(f"   ✔ communities={num_communities}, modularity={mod_score:.4f}, time={(end_time-start_time):.4f}s")
 
     # Ensure results directory exists
     os.makedirs("results", exist_ok=True)
 
-    output_file = "results/saanvi_louvain_benchmarks.json"
+    output_file = "results/saanvi_benchmarks.json"
 
     # Save JSON
     with open(output_file, "w") as f:
