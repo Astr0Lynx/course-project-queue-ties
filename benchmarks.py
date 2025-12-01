@@ -14,11 +14,10 @@ Usage:
     python benchmarks.py girvan_newman
     python benchmarks.py dfs
     python benchmarks.py pagerank
-    python benchmarks.py market_disruption
     
     # Names are normalized (case-insensitive, hyphens/underscores)
     python benchmarks.py Girvan-Newman  # Also works
-    python benchmarks.py market-disruption  # Also works
+    python benchmarks.py DFS  # Also works
     
     # Show help
     python benchmarks.py --help
@@ -32,7 +31,7 @@ Note:
     - union_find, bfs: guntesh-data-foundation
     - louvain: main / saanvi-louvian  
     - girvan_newman: avani-girvan-newman
-    - dfs, pagerank, market_disruption: main
+    - dfs, pagerank: main
     
     Make sure the required algorithm files are in src/ before running!
 """
@@ -104,12 +103,6 @@ class UniversalBenchmarkRunner:
             'display_name': 'PageRank',
             'import_path': 'pagerank',
             'functions': ['PageRank', 'identify_market_influencers'],
-            'branch': 'main'
-        },
-        'market_disruption': {
-            'display_name': 'Market Disruption',
-            'import_path': 'market_disruption',
-            'functions': ['MarketDisruptionSimulator'],
             'branch': 'main'
         }
     }
@@ -361,41 +354,6 @@ class UniversalBenchmarkRunner:
         
         return result
     
-    def benchmark_market_disruption(self, graph, stock_attributes: Dict,
-                                   scenario: str, num_stocks: int) -> Dict:
-        """Benchmark Market Disruption Simulator."""
-        from market_disruption import MarketDisruptionSimulator
-        
-        print(f"  Benchmarking Market Disruption...")
-        
-        mem_before = get_memory_usage()
-        start_time = time.time()
-        
-        simulator = MarketDisruptionSimulator(graph, stock_attributes)
-        crash_result = simulator.simulate_market_crash(severity=0.5)
-        
-        end_time = time.time()
-        mem_after = get_memory_usage()
-        
-        runtime = end_time - start_time
-        memory_used = mem_after - mem_before
-        
-        result = {
-            'algorithm': 'Market Disruption',
-            'scenario': scenario,
-            'num_stocks': num_stocks,
-            'num_edges': graph.num_edges,
-            'runtime_seconds': runtime,
-            'memory_mb': memory_used,
-            'network_fragility': crash_result.get('network_fragility', 0),
-            'edges_added': crash_result.get('edges_added', 0),
-        }
-        
-        print(f"    > Runtime: {runtime*1000:.2f}ms | Memory: {memory_used:.2f}MB")
-        print(f"    > Fragility: {result['network_fragility']:.3f} | Edges added: {result['edges_added']}")
-        
-        return result
-    
     def run_benchmark(self, algorithm: str, sizes: List[int], scenarios: List[str]) -> List[Dict]:
         """
         Run benchmark for a specific algorithm.
@@ -455,8 +413,6 @@ class UniversalBenchmarkRunner:
                     result = self.benchmark_dfs(graph, stock_attrs, scenario, size)
                 elif algorithm == 'pagerank':
                     result = self.benchmark_pagerank(graph, stock_attrs, scenario, size)
-                elif algorithm == 'market_disruption':
-                    result = self.benchmark_market_disruption(graph, stock_attrs, scenario, size)
                 else:
                     print(f"  Warning: No benchmark implementation for {algorithm}")
                     continue
