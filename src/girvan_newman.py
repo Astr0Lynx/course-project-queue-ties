@@ -12,7 +12,7 @@ from __future__ import annotations
 from collections import defaultdict, deque
 from typing import Any, Dict, Iterable, List, Sequence, Tuple
 
-from graph import Graph
+from graph import Graph, load_graph, save_graph
 
 try:  # Optional dependency for richer sample generation
     from data_generation import StockDataGenerator
@@ -168,6 +168,71 @@ def _connected_components(graph: Graph) -> List[List[Any]]:
     return components
 
 
+def _estimate_virtual_edge_weight(graph: Graph) -> float:
+    """Infer a minimal edge weight for virtual bridges based on existing edges."""
+
+    weights: List[float] = []
+    for node in graph.nodes():
+        for weight in graph.get_neighbors(node).values():
+            if weight > 0:
+                weights.append(weight)
+
+    if weights:
+        return max(min(weights), 1e-3)
+    return 1e-3
+
+
+def _chain_nodes_with_virtual_edges(graph: Graph, ordered_nodes: List[Any]) -> None:
+    """Connect nodes sequentially with low-weight edges to ensure connectivity."""
+
+    if len(ordered_nodes) <= 1:
+        return
+
+    bridge_weight = _estimate_virtual_edge_weight(graph)
+    for idx in range(len(ordered_nodes) - 1):
+        u, v = ordered_nodes[idx], ordered_nodes[idx + 1]
+        if not graph.has_edge(u, v):
+            graph.add_edge(u, v, bridge_weight)
+
+
+def _connect_components_with_virtual_edges(graph: Graph, components: List[List[Any]]) -> None:
+    """Bridge disconnected components with lightweight virtual edges."""
+
+    if len(components) <= 1:
+        return
+
+    bridge_weight = _estimate_virtual_edge_weight(graph)
+    representative = components[0][0]
+    for component in components[1:]:
+        target = component[0]
+        if not graph.has_edge(representative, target):
+            graph.add_edge(representative, target, bridge_weight)
+        representative = target
+
+
+def _augment_graph_with_virtual_bridges(graph: Graph) -> Graph:
+    """Return a working copy of the graph that is fully connected for GN iterations."""
+
+    working_graph = graph.copy()
+    nodes = working_graph.nodes()
+    if len(nodes) <= 1:
+        return working_graph
+
+    components = _connected_components(working_graph)
+
+    if working_graph.number_of_edges() == 0:
+        ordered_nodes: List[Any] = []
+        for component in components:
+            ordered_nodes.extend(sorted(component))
+        _chain_nodes_with_virtual_edges(working_graph, ordered_nodes)
+        return working_graph
+
+    if len(components) > 1:
+        _connect_components_with_virtual_edges(working_graph, components)
+
+    return working_graph
+
+
 def girvan_newman(graph: Graph, max_iterations: int | None = None) -> Tuple[Partition, float]:
     """Detect communities using the Girvan-Newman algorithm.
     
@@ -192,24 +257,10 @@ def girvan_newman(graph: Graph, max_iterations: int | None = None) -> Tuple[Part
     if graph.number_of_nodes() == 0:
         return [], 0.0
 
-    # Check if graph is connected
-    initial_components = _connected_components(graph)
-    if len(initial_components) > 1:
-        # Work on largest connected component only
-        largest_component = max(initial_components, key=len)
-        # Create subgraph with only largest component nodes
-        working_graph = Graph()
-        for node in largest_component:
-            working_graph.add_node(node, graph.node_attributes.get(node, {}))
-        for node in largest_component:
-            for neighbor, weight in graph.get_neighbors(node).items():
-                if neighbor in largest_component and not working_graph.has_edge(node, neighbor):
-                    working_graph.add_edge(node, neighbor, weight)
-    else:
-        working_graph = graph.copy()
-    
+    working_graph = _augment_graph_with_virtual_bridges(graph)
+
     best_partition: Partition = [sorted(working_graph.nodes())]
-    best_modularity = modularity(working_graph, best_partition)
+    best_modularity = modularity(graph, best_partition)
     iteration = 0
 
     # Iteratively remove highest-betweenness edges
@@ -430,8 +481,8 @@ def main() -> None:
     json_path = "../data/stock_graph.json"
 
     # Persist graph and reload for analysis
-    save_graph_to_json(sample_graph, json_path)
-    loaded_graph = load_graph_from_json(json_path)
+    save_graph(sample_graph, json_path)
+    loaded_graph = load_graph(json_path)
 
     # Run community detection
     communities, score = girvan_newman(loaded_graph)
