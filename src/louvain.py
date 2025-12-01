@@ -131,9 +131,10 @@ def louvain(graph):
                 if u != v:
                     agg.add_edge(str(u), str(v), w)
 
-        # Update communities mapping: each supernode is its own community
-        communities = {node: i for i, node in enumerate(agg.get_nodes())}
+        # Update for next iteration
         graph = agg
+        nodes = list(agg.get_nodes())
+        communities = {node: i for i, node in enumerate(nodes)}
 
     final_modularity = compute_modularity(graph, communities)
     return communities, final_modularity
