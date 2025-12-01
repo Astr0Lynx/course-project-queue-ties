@@ -136,8 +136,7 @@ def louvain(graph: Graph, resolution: float = 1.0, random_state: int | None = No
         random.seed(random_state)
 
     working_graph = graph
-
-    # initial partition: each node in its own community
+    # Initial partition: each node in its own community
     partition_map = {node: idx for idx, node in enumerate(working_graph.get_nodes())}
     strengths = _node_strengths(working_graph)
     m = _total_edge_weight(working_graph)
@@ -145,12 +144,9 @@ def louvain(graph: Graph, resolution: float = 1.0, random_state: int | None = No
         return _partition_to_communities(partition_map), 0.0
 
     current_mod = modularity(working_graph, _partition_to_communities(partition_map))
-
     improvement = True
-    level = 0
     while improvement:
         improvement = False
-        # Phase 1: local moving
         passes = 0
         while passes < max_passes:
             passes += 1
@@ -158,41 +154,49 @@ def louvain(graph: Graph, resolution: float = 1.0, random_state: int | None = No
             nodes = working_graph.get_nodes()
             random.shuffle(nodes)
 
-            # prepare community stats
+            # Community weights
             comm_weight: Dict[int, float] = {}
             for node, comm in partition_map.items():
                 comm_weight[comm] = comm_weight.get(comm, 0.0) + strengths.get(node, 0.0)
 
             for node in nodes:
-                node_comm = partition_map[node]
+                node_comm = partition_map.get(node, None)
+                if node_comm is None:
+                    # Assign to new community if missing
+                    node_comm = max(comm_weight.keys(), default=0) + 1
+                    partition_map[node] = node_comm
+                    comm_weight[node_comm] = strengths.get(node, 0.0)
                 node_ki = strengths.get(node, 0.0)
 
-                # compute weights from node to neighboring communities
+                # Neighboring community weights
                 neighbor_comms: Dict[int, float] = {}
                 for nbr, w in working_graph.get_neighbors(node).items():
-                    neighbor_comms[partition_map[nbr]] = neighbor_comms.get(partition_map[nbr], 0.0) + float(w)
+                    nbr_comm = partition_map.get(nbr, None)
+                    if nbr_comm is None:
+                        nbr_comm = max(comm_weight.keys(), default=0) + 1
+                        partition_map[nbr] = nbr_comm
+                        comm_weight[nbr_comm] = strengths.get(nbr, 0.0)
+                    neighbor_comms[nbr_comm] = neighbor_comms.get(nbr_comm, 0.0) + float(w)
 
-                # remove node from current community temporarily
+                # Remove node from current community temporarily
                 comm_weight[node_comm] -= node_ki
 
-                # evaluate best community to move to
+                # Find best community to move to
                 best_delta = 0.0
                 best_comm = node_comm
                 for comm, k_i_in in neighbor_comms.items():
                     sum_tot = comm_weight.get(comm, 0.0)
-                    # delta Q (weighted) simplified formula
                     delta_q = (k_i_in - (node_ki * sum_tot) / (2.0 * m)) / (2.0 * m)
                     if delta_q * resolution > best_delta:
                         best_delta = delta_q * resolution
                         best_comm = comm
 
-                # if moving to best_comm improves modularity, do it
+                # Move if modularity improves
                 if best_comm != node_comm and best_delta > 1e-12:
                     partition_map[node] = best_comm
                     comm_weight[best_comm] = comm_weight.get(best_comm, 0.0) + node_ki
                     moved += 1
                 else:
-                    # move back to original community
                     comm_weight[node_comm] = comm_weight.get(node_comm, 0.0) + node_ki
 
             if moved > 0:
@@ -201,10 +205,10 @@ def louvain(graph: Graph, resolution: float = 1.0, random_state: int | None = No
                 break
 
         # Phase 2: aggregate graph and repeat if improvement
-        new_partition = {}
-        # compact community ids to small integers
+        # Compact community ids
         mapping = {}
         next_id = 0
+        new_partition = {}
         for node, comm in partition_map.items():
             if comm not in mapping:
                 mapping[comm] = next_id
@@ -212,27 +216,24 @@ def louvain(graph: Graph, resolution: float = 1.0, random_state: int | None = No
             new_partition[node] = mapping[comm]
 
         new_graph = _aggregate_graph(working_graph, new_partition)
-        new_partition_map = {n: int(n) for n in new_graph.get_nodes()} if new_graph.get_nodes() else {}
+        # After aggregation, partition_map = {node: int(node) for node in new_graph.get_nodes()}
+        partition_map = {node: int(node) for node in new_graph.get_nodes()}
+        strengths = _node_strengths(new_graph)
+        working_graph = new_graph
+        m = _total_edge_weight(working_graph)
 
-        # compute modularity of current partition on original graph
-        communities = _partition_to_communities(partition_map)
+        # Always return partition as a list of lists (communities)
+        communities = _partition_to_communities(new_partition)
         new_mod = modularity(graph, communities)
 
         if new_mod - current_mod > 1e-7 and new_graph.get_nodes():
-            # prepare for next level
             improvement = True
             current_mod = new_mod
-            # rebuild partition_map for aggregated graph
-            # map old node -> new community id (as int)
-            partition_map = {node: new_partition[node] for node in partition_map}
-            strengths = _node_strengths(new_graph)
-            working_graph = new_graph
-            m = _total_edge_weight(working_graph)
-            level += 1
         else:
-            # finished
+            # Final output: partition is always a list of lists
             return communities, new_mod
 
+    # Final output: partition is always a list of lists
     return _partition_to_communities(partition_map), current_mod
 
 

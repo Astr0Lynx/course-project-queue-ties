@@ -209,21 +209,21 @@ class UniversalBenchmarkRunner:
                           scenario: str, num_stocks: int) -> Dict:
         """Benchmark Louvain algorithm."""
         from src.louvain import louvain
-        
+
         print(f"  Benchmarking Louvain...")
-        
+
         mem_before = get_memory_usage()
         start_time = time.time()
-        
+
         communities, modularity_score = louvain(graph)
-        
+
         end_time = time.time()
         mem_after = get_memory_usage()
-        
+
         runtime = end_time - start_time
         memory_used = max(0, mem_after - mem_before)  # Prevent negative memory
-        num_communities = len(set(communities.values()))
-        
+        num_communities = len(communities)
+
         result = {
             'algorithm': 'Louvain',
             'scenario': scenario,
@@ -234,10 +234,10 @@ class UniversalBenchmarkRunner:
             'num_communities': num_communities,
             'modularity': modularity_score,
         }
-        
+
         print(f"    > Runtime: {runtime*1000:.4f}ms | Memory: {memory_used:.4f}MB")
         print(f"    > Communities: {num_communities} | Modularity: {modularity_score:.4f}")
-        
+
         return result
     
     def benchmark_girvan_newman(self, graph, stock_attributes: Dict,
