@@ -136,4 +136,74 @@ Appendix: Example interpretation template (fill with your numbers)
 - Algorithm X (100 nodes): mean runtime Y s, memory Z MB, quality Q.
 - Observed scaling between 100→500: runtime increased by factor F, expected by theory ~G — explain difference.
 
+## Algorithm Performance Summary
+
+| Algorithm      | Mean Runtime (s) | Min Runtime (s) | Max Runtime (s) | Std Runtime (s) | Mean Memory (MB) | Min Memory (MB) | Max Memory (MB) | Std Memory (MB) |
+|----------------|------------------|-----------------|-----------------|-----------------|------------------|-----------------|-----------------|-----------------|
+| Union-Find     | 0.0012           | 0.0010          | 0.0015          | 0.0002          | 0.05             | 0.04            | 0.06            | 0.01            |
+| BFS            | 0.0050           | 0.0045          | 0.0055          | 0.0003          | 0.07             | 0.06            | 0.08            | 0.01            |
+| Louvain        | 0.0200           | 0.0180          | 0.0220          | 0.0015          | 0.10             | 0.09            | 0.11            | 0.01            |
+| Girvan-Newman  | 0.1500           | 0.1400          | 0.1600          | 0.0080          | 0.30             | 0.28            | 0.32            | 0.02            |
+| DFS            | 0.0010           | 0.0009          | 0.0012          | 0.0001          | 0.05             | 0.04            | 0.06            | 0.01            |
+| PageRank       | 0.0100           | 0.0090          | 0.0110          | 0.0005          | 0.08             | 0.07            | 0.09            | 0.01            |
+| Node2Vec       | 0.0500           | 0.0480          | 0.0520          | 0.0010          | 0.15             | 0.14            | 0.16            | 0.01            |
+
+---
+
+## Solution Quality Table (Community Algorithms)
+
+| Algorithm      | Scenario | Graph Size | Num Communities | Modularity |
+|----------------|----------|------------|-----------------|-----------|
+| Louvain        | stable   | 100        | 5               | 0.42      |
+| Louvain        | crash    | 100        | 1               | 0.01      |
+| Girvan-Newman  | stable   | 100        | 4               | 0.39      |
+| Girvan-Newman  | crash    | 100        | 1               | 0.00      |
+
+---
+
+## Scaling Table (Runtime vs Graph Size)
+
+| Algorithm      | Scenario | Graph Size | Runtime (s) | Memory (MB) |
+|----------------|----------|------------|-------------|-------------|
+| DFS            | stable   | 100        | 0.0010      | 0.05        |
+| DFS            | stable   | 250        | 0.0025      | 0.06        |
+| DFS            | stable   | 500        | 0.0050      | 0.07        |
+| BFS            | stable   | 100        | 0.0050      | 0.07        |
+| BFS            | stable   | 250        | 0.0125      | 0.08        |
+| BFS            | stable   | 500        | 0.0250      | 0.09        |
+| Louvain        | stable   | 100        | 0.0200      | 0.10        |
+| Louvain        | stable   | 250        | 0.0500      | 0.12        |
+| Louvain        | stable   | 500        | 0.1000      | 0.15        |
+
+---
+
+## Connectivity Table (DFS/Union-Find)
+
+| Algorithm   | Scenario | Graph Size | Num Components | Largest Component | Connectivity Ratio |
+|-------------|----------|------------|----------------|-------------------|-------------------|
+| DFS         | stable   | 100        | 1              | 100               | 1.00              |
+| DFS         | normal   | 100        | 41             | 60                | 0.60              |
+| Union-Find  | crash    | 100        | 1              | 100               | 1.00              |
+
+---
+
+## PageRank Quality Table
+
+| Scenario | Graph Size | Top Score | Avg Score | Iterations |
+|----------|------------|-----------|-----------|------------|
+| stable   | 100        | 0.032     | 0.010     | 100        |
+| crash    | 100        | 0.020     | 0.010     | 100        |
+
+---
+
+## Node2Vec Embedding Table
+
+| Scenario | Graph Size | Embedding Dim | Num Embeddings | Runtime (s) | Memory (MB) |
+|----------|------------|---------------|---------------|-------------|-------------|
+| stable   | 100        | 32            | 100           | 0.050       | 0.15        |
+| crash    | 100        | 32            | 100           | 0.048       | 0.14        |
+
+---
+
+*Replace the numbers above with your actual results from the CSVs produced by your benchmarks.*
 (End of report)
